@@ -36,18 +36,16 @@ vector<Group<String>> GroupHeavyStrings(vector<String> strings) {
   // Напишите реализацию функции,
   // использовав не более 1 копирования каждого символа
 
-  using StringKey = set<Char<String>>;
-  map<StringKey, Group<String>> strKeyToGroup;
+  map<String, Group<String>> strKeyToGroup;
 
-  for(const String& str: strings){
-    StringKey stringKey;
-    for(Char<String> ch : str){
-      stringKey.insert(ch);
-    }
-    strKeyToGroup[stringKey].push_back(move(str));
+  for(String& str: strings){
+    String chars = str;
+    sort(begin(chars), end(chars));
+    chars.erase(unique(begin(chars), end(chars)), end(chars));
+    strKeyToGroup[chars].push_back(move(str));
   }
   vector<Group<String>> groups;
-  for(const auto& item : strKeyToGroup){
+  for(auto& item : strKeyToGroup){
     groups.push_back(move(item.second));
   }
   return groups;
